@@ -18,4 +18,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Pages\Users\" />
+    <Folder Include="Areas\Identity\" />
+    <Folder Include="Areas\User\" />
+  </ItemGroup>
+
 </Project>
