@@ -20,7 +20,9 @@ namespace Portal.Web
             {
                 options.UseSqlServer("Data Source=localhost\\sqlexpress;Initial Catalog=portalDb_dev01;Integrated Security=True");
             });
-            services.AddRazorPages();
+
+            services.AddRazorPages()
+                .AddRazorRuntimeCompilation(); ;
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
