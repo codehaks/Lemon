@@ -1,0 +1,36 @@
+﻿@page
+@model Portal.Web.Areas.Admin.Pages.Foods.IndexModel
+@{
+    var i = 1;
+    ViewData["title"] = "Foods";
+}
+
+@section Navbar{
+    <a asp-page="./create" class="btn btn-primary">Create</a>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Type</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var food in Model.FoodList)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@food.Name</td>
+                <td>@food.Price</td>
+                <td>@food.FoodType</td>
+                <td>
+                    <a asp-page="./edit" asp-route-id="@food.Id" class="btn btn-dark">Edit</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
