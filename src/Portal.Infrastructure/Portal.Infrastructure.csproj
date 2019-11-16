@@ -13,8 +13,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Portal.Domain\Portal.Domain.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Persistance\Configs\" />
-  </ItemGroup>
 
 </Project>
