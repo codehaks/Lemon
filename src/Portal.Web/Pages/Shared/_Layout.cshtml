@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width" />
     <title>Lemon | @ViewBag.Title</title>
     <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+
 </head>
 <body>
     <partial name="_Navbar" />
@@ -13,5 +15,6 @@
     </main>
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

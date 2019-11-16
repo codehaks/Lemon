@@ -1,0 +1,30 @@
+﻿@{
+    Layout = "~/pages/shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/css/public.css" rel="stylesheet" asp-append-version="true" />
+    @RenderSection("styles", required: false)
+}
+
+<div class="container-fluid mt-1">
+    <div class="row">
+        <div role="main" class="col-2">
+            <partial name="_Sidebar" />
+        </div>
+        <div role="main" class="col-10">
+            <nav class="navbar navbar-light bg-info shadow-sm">
+                <span class="navbar-brand">
+                    @ViewBag.Title
+                </span>
+                @RenderSection("Navbar", required: false)
+            </nav>
+
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @RenderSection("scripts", required: false)
+}
