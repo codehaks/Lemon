@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Portal\Portal.csproj" />
+    <ProjectReference Include="..\Portal.Domain\Portal.Domain.csproj" />
   </ItemGroup>
 
 </Project>
