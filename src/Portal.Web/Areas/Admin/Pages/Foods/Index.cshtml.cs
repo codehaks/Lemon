@@ -25,7 +25,7 @@ namespace Portal.Web.Areas.Admin.Pages.Foods
         public async Task<IActionResult> OnGet()
         {
             _logger.LogInformation("Foods Index");
-            FoodList = await _foodService.GetAll();
+            FoodList = await _foodService.FindAll();
             return Page();
         }
     }

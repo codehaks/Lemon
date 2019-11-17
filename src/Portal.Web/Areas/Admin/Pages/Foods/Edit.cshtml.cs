@@ -23,7 +23,7 @@ namespace Portal.Web.Areas.Admin.Pages.Foods
 
         public async Task<IActionResult> OnGet(int id)
         {
-            var food = await _foodService.GetForEdit(id);
+            var food = await _foodService.GetEdit(id);
 
             Id = food.Id;
             PriceAmount = food.Price;

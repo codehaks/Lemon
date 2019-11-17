@@ -31,20 +31,20 @@ namespace Portal.Application.Foods
             await _db.SaveChangesAsync();
         }
 
-        public async Task<IList<FoodInfo>> GetAll()
+        public async Task<IList<FoodInfo>> FindAll()
         {
             var model = await _db.Foods.ToListAsync();
 
             return model.Select(_mapper.Map<Food, FoodInfo>).ToList();
         }
 
-        public async Task<FoodInfo> Get(int id)
+        public async Task<FoodInfo> FindById(int id)
         {
             var model = await _db.Foods.FindAsync(id);
             return _mapper.Map<Food, FoodInfo>(model);
         }
 
-        public async Task<FoodEditInfo> GetForEdit(int foodId)
+        public async Task<FoodEditInfo> GetEdit(int foodId)
         {
             var food = await _db.Foods.FindAsync(foodId);
             _logger.LogInformation($"Food by Id [{food.Id}] found.");

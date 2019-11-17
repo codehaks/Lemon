@@ -10,9 +10,9 @@ namespace Portal.Application.Foods
     {
         public FoodAddValidator()
         {
-            RuleFor(u => u.Name).NotEmpty().WithMessage("Required");
-            RuleFor(u => u.Price).GreaterThan(0).WithMessage("Food can not be free!");
-            RuleFor(u => u.Description).NotEmpty().WithMessage("Required");
+            RuleFor(u => u.Name).NotEmpty().WithMessage("Food should have a name.");
+            RuleFor(u => u.Price).GreaterThan(0).WithMessage("Food can not be free.");
+            RuleFor(u => u.Description).NotEmpty().WithMessage("Food needs description");
         }
     }
 }
