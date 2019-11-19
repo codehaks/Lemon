@@ -28,8 +28,16 @@ namespace Portal.Web.Controllers
         [Route("api/food")]
         public async Task<IActionResult> Create(FoodAddInfo model)
         {
-            await _foodService.Create(model);
-            return Ok(model);
+            if (ModelState.IsValid)
+            {
+                await _foodService.Create(model);
+                return Ok(model);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+      
         }
 
         [HttpGet]

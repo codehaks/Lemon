@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -51,7 +52,8 @@ namespace Portal.Web
                .AddEntityFrameworkStores<PortalDbContext>();
 
             services.AddRazorPages()
-                .AddRazorRuntimeCompilation(); ;
+                .AddRazorRuntimeCompilation()
+                .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<FoodAddValidator>(); });
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
