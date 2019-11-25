@@ -18,9 +18,9 @@ namespace Portal.Web.Controllers
 
         [HttpGet]
         [Route("api/food")]
-        public IActionResult FindAll()
+        public async Task<IActionResult> FindAll()
         {
-            var model = _foodService.FindAll();
+            var model = await _foodService.FindAll();
             return Ok(model);
         }
 
