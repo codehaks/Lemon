@@ -50,6 +50,7 @@ namespace Portal.Web
             services.AddDefaultIdentity<ApplicationUser>()
                .AddDefaultUI()
                .AddEntityFrameworkStores<PortalDbContext>();
+            services.AddControllers();
 
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation()
@@ -67,6 +68,7 @@ namespace Portal.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }

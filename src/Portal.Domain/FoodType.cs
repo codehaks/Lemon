@@ -6,5 +6,4 @@
         Drink = 1,
         Desert = 2
     }
-
 }
