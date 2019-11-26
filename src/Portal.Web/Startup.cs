@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Portal.Application.FoodApplication;
+using Portal.Application.FoodApplication.Commands.Create;
 using Portal.Application.Foods;
 using Portal.Domain.Identity;
 using Portal.Persisatance;
@@ -44,6 +46,7 @@ namespace Portal.Web
             });
 
             services.AddAutoMapper(typeof(FoodMapper).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(FoodCreateCommand).GetTypeInfo().Assembly);
 
             services.AddTransient<IFoodService, FoodService>();
 
