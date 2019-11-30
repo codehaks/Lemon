@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Portal.Application.Common;
 using Portal.Application.FoodApplication;
 using Portal.Application.FoodApplication.Commands.Create;
 using Portal.Application.Foods;
@@ -47,6 +48,8 @@ namespace Portal.Web
 
             services.AddAutoMapper(typeof(FoodMapper).GetTypeInfo().Assembly);
             services.AddMediatR(typeof(FoodCreateCommand).GetTypeInfo().Assembly);
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
             services.AddTransient<IFoodService, FoodService>();
 
