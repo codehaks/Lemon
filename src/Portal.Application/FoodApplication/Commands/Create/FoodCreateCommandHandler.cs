@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Portal.Application.Foods;
 using Portal.Domain;
 using Portal.Persisatance;
 using System;
@@ -19,18 +20,31 @@ namespace Portal.Application.FoodApplication.Commands.Create
         }
         public async Task<int> Handle(FoodCreateCommand request, CancellationToken cancellationToken)
         {
-            var food = new Food
+            var validator = new FoodCreateCommandValidator();
+            var check = validator.Validate(request);
+
+            if (check.IsValid)
             {
-                Name = request.Name,
-                Description = request.Description,
-                FoodType = request.FoodType,
-                Price = request.Price
+                var food = new Food
+                {
+                    Name = request.Name,
+                    Description = request.Description,
+                    FoodType = request.FoodType,
+                    Price = request.Price
 
-            };
-            var result = _db.Foods.Add(food);
-            await _db.SaveChangesAsync();
+                };
+                var result = _db.Foods.Add(food);
+                await _db.SaveChangesAsync();
 
-            return result.Entity.Id;            
+                return result.Entity.Id;
+            }
+            else
+            {
+                throw new Exception(" Food is not valid");
+
+            }
+
+
         }
     }
 }
