@@ -20,11 +20,7 @@ namespace Portal.Application.FoodApplication.Commands.Create
         }
         public async Task<int> Handle(FoodCreateCommand request, CancellationToken cancellationToken)
         {
-            var validator = new FoodCreateCommandValidator();
-            var check = validator.Validate(request);
-
-            if (check.IsValid)
-            {
+           
                 var food = new Food
                 {
                     Name = request.Name,
@@ -37,12 +33,7 @@ namespace Portal.Application.FoodApplication.Commands.Create
                 await _db.SaveChangesAsync();
 
                 return result.Entity.Id;
-            }
-            else
-            {
-                throw new Exception(" Food is not valid");
-
-            }
+            
 
 
         }
