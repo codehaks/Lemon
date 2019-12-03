@@ -50,7 +50,9 @@ namespace Portal.Web
             services.AddMediatR(typeof(FoodCreateCommand).GetTypeInfo().Assembly);
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CreateFoodValidationBehavior<FoodCreateCommand, int>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidateCommandBehavior<,>));
+
+            //services.AddTransient(typeof(IPipelineBehavior<FoodCreateCommand, int>), typeof(CreateFoodValidationBehavior<FoodCreateCommand, int>));
 
             services.AddTransient<IFoodService, FoodService>();
 
