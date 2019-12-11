@@ -28,7 +28,7 @@
 
     <div class="form-group">
         <label asp-for="FoodType"></label>
-        <select asp-for="FoodType" asp-items="@Html.GetEnumSelectList<FoodType>()" class="form-control"></select>
+        <select asp-for="FoodType" asp-items='new SelectList(FoodType.GetAll<FoodType>(), "Value")' class="form-control"></select>
         <span asp-validation-for="FoodType" class="text-danger"></span>
     </div>
 
