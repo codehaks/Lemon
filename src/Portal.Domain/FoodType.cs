@@ -11,7 +11,10 @@ namespace Portal.Common.Enums
         public static FoodType Meal = new FoodType(0, "Meal");
         public static FoodType Drink = new FoodType(1, "Drink");
         public static FoodType Desert = new FoodType(2, "Desert");
+        public FoodType()
+        {
 
+        }
         public FoodType(int id, string name)
             : base(id, name)
         {

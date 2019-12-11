@@ -12,6 +12,11 @@ namespace Portal.Domain.Common
 
         public int Id { get; private set; }
 
+        public Enumeration()
+        {
+
+        }
+
         protected Enumeration(int id, string name)
         {
             Id = id;
