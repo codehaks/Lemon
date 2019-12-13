@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Portal.Application.Foods;
 using Portal.Domain;
+using Portal.Domain.Values;
 using Portal.Persisatance;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace Portal.Application.FoodApplication.Commands.Create
                     Name = request.Name,
                     Description = request.Description,
                     FoodType = request.FoodType,
-                    Price = request.Price
+                    Price = new Money(request.Price)
 
                 };
                 var result = _db.Foods.Add(food);
