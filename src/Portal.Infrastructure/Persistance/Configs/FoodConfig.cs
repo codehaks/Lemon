@@ -16,10 +16,11 @@ namespace Portal.Persistance.Configs
             builder.HasIndex(f => f.Name).IsUnique();
             builder.Property(f => f.Name).HasMaxLength(25).IsRequired();
             builder.Property(f => f.Description).HasMaxLength(1000).IsRequired();
+
             builder.Property(f=>f.FoodType)
                 .HasColumnName("FoodType")
-                .HasConversion(v => v.Id,
-                v => FoodType.GetAll<FoodType>().Single(s => s.Id==v));
+                .HasConversion(f => f.Id,
+                foodTypeId => FoodType.GetAll<FoodType>().Single(s => s.Id== foodTypeId));
         }
     }
 }
