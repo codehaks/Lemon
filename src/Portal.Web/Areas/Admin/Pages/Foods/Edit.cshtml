@@ -3,7 +3,6 @@
 @model Portal.Web.Areas.Admin.Pages.Foods.EditModel
 @{
     ViewData["title"] = "Edit";
-    //var foodTypeSelect = new SelectList(Portal.Common.Enums.FoodType.GetAll(), "Id", "Name");
 }
 
     <form method="post">
@@ -22,9 +21,9 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="FoodType"></label>
-            <select asp-for="FoodType" asp-items='new SelectList(FoodType.GetAll<FoodType>(), "Value")' class="form-control"></select>
-            <span asp-validation-for="FoodType" class="text-danger"></span>
+            <label asp-for="FoodTypeName"></label>
+            <select asp-for="FoodTypeName" asp-items='new SelectList(FoodType.GetAll<FoodType>(), "Value")' class="form-control"></select>
+            <span asp-validation-for="FoodTypeName" class="text-danger"></span>
         </div>
 
         <div class="form-group">

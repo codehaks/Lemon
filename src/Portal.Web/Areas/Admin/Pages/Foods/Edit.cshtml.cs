@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Portal.Application.Foods;
 using Portal.Common.Enums;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portal.Web.Areas.Admin.Pages.Foods
@@ -19,7 +20,7 @@ namespace Portal.Web.Areas.Admin.Pages.Foods
         public int PriceAmount { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public FoodType FoodType { get; set; }
+        public string FoodTypeName { get; set; }
 
         public async Task<IActionResult> OnGet(int id)
         {
@@ -29,21 +30,21 @@ namespace Portal.Web.Areas.Admin.Pages.Foods
             PriceAmount = food.Price;
             Name = food.Name;
             Description = food.Description;
-            FoodType = food.FoodType;
+            FoodTypeName = food.FoodType.Name;
             return Page();
 
         }
 
         public async Task<IActionResult> OnPost()
         {
-
+            
             await _foodService.Update(new Application.Foods.Models.FoodEditInfo()
             {
                 Id = Id,
                 Name = Name,
                 Price = PriceAmount,
                 Description = Description,
-                FoodType = FoodType
+                FoodType = Domain.Common.Enumeration.GetAll<FoodType>().Single(f=>f.Name==FoodTypeName)
             });
 
             return RedirectToPage("./Index");
