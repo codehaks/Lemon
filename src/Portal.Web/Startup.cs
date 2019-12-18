@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -52,6 +53,7 @@ namespace Portal.Web
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidateCommandBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<FoodCreateCommand, int>), typeof(CreateFoodUniqueNameValidator));
+            services.AddScoped(typeof(IRequestPostProcessor<,>), typeof(CommitCommandPostProcessor<,>));
 
             //services.AddTransient(typeof(IPipelineBehavior<FoodCreateCommand, int>), typeof(CreateFoodValidationBehavior<FoodCreateCommand, int>));
 

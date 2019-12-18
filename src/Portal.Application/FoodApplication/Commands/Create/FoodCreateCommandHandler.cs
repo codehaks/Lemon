@@ -30,8 +30,8 @@ namespace Portal.Application.FoodApplication.Commands.Create
                     Price = new Money(request.Price)
 
                 };
-                var result = _db.Foods.Add(food);
-                await _db.SaveChangesAsync();
+                var result = await _db.Foods.AddAsync(food);
+                //await _db.SaveChangesAsync();
 
                 return result.Entity.Id;
             
