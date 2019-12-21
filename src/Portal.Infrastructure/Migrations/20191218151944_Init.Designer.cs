@@ -10,8 +10,8 @@ using Portal.Persisatance;
 namespace Portal.Infrastructure.Migrations
 {
     [DbContext(typeof(PortalDbContext))]
-    [Migration("20191116033137_FoodTable")]
-    partial class FoodTable
+    [Migration("20191218151944_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,6 +19,7 @@ namespace Portal.Infrastructure.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("Relational:Sequence:.EntityFrameworkHiLoSequence", "'EntityFrameworkHiLoSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -161,7 +162,8 @@ namespace Portal.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation("SqlServer:HiLoSequenceName", "EntityFrameworkHiLoSequence")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -175,9 +177,6 @@ namespace Portal.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -301,6 +300,25 @@ namespace Portal.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Portal.Domain.Food", b =>
+                {
+                    b.OwnsOne("Portal.Domain.Values.Money", "Price", b1 =>
+                        {
+                            b1.Property<int>("FoodId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Value")
+                                .HasColumnType("int");
+
+                            b1.HasKey("FoodId");
+
+                            b1.ToTable("Foods");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FoodId");
+                        });
                 });
 #pragma warning restore 612, 618
         }
