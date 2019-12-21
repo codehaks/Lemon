@@ -54,16 +54,23 @@ namespace Portal.Application.Foods
 
         public async Task Update(FoodEditInfo foodEditInfo)
         {
-            var food = new Food
-            {
-                Id=foodEditInfo.Id,
-                Name = foodEditInfo.Name,
-                Price = new Money(foodEditInfo.Price.Value),
-                FoodType = foodEditInfo.FoodType,
-                Description = foodEditInfo.Description
-            };
+            var food = new Food(foodEditInfo.Name, new Money(foodEditInfo.Price.Value), foodEditInfo.FoodType);
+            //{
+            //    Id=foodEditInfo.Id,
+            //    Name = foodEditInfo.Name,
+            //    Price = new Money(foodEditInfo.Price.Value),
+            //    FoodType = foodEditInfo.FoodType,
+            //    Description = foodEditInfo.Description
+            //};
+
+            food.Id = foodEditInfo.Id;
+            food.Description = foodEditInfo.Description;
+
+            //food.UpdatePrice(foodEditInfo.Price);
+            
                         
             _db.Entry(food).State = EntityState.Modified;
+            _db.Entry(food.Price).State = EntityState.Modified;
 
             await _db.SaveChangesAsync();
 

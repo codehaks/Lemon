@@ -21,16 +21,20 @@ namespace Portal.Application.FoodApplication.Commands.Create
         }
         public async Task<int> Handle(FoodCreateCommand request, CancellationToken cancellationToken)
         {
-           
-                var food = new Food
-                {
-                    Name = request.Name,
-                    Description = request.Description,
-                    FoodType = request.FoodType,
-                    Price = new Money(request.Price)
 
-                };
-                var result = await _db.Foods.AddAsync(food);
+            var food = new Food(request.Name, new Money(request.Price), request.FoodType)
+            {
+                Description = request.Description
+            };
+
+            //{
+            //    Name = request.Name,
+            //    Description = request.Description,
+            //    FoodType = request.FoodType,
+            //    Price = new Money(request.Price)
+
+            //};
+            var result = await _db.Foods.AddAsync(food);
                 //await _db.SaveChangesAsync();
 
                 return result.Entity.Id;
