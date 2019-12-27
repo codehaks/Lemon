@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Portal.Application.FoodApplication.Commands.Create
 {
-    class FoodCreateCommandHandler : IRequestHandler<FoodCreateCommand, int>
+    class FoodCreateCommandHandler : IRequestHandler<FoodCreateCommand, FoodCreateCommandResult>
     {
         private readonly PortalDbContext _db;
 
@@ -19,7 +19,7 @@ namespace Portal.Application.FoodApplication.Commands.Create
         {
             _db = db;
         }
-        public async Task<int> Handle(FoodCreateCommand request, CancellationToken cancellationToken)
+        public async Task<FoodCreateCommandResult> Handle(FoodCreateCommand request, CancellationToken cancellationToken)
         {
 
             var food = new Food(request.Name, new Money(request.Price), request.FoodType)
@@ -27,18 +27,28 @@ namespace Portal.Application.FoodApplication.Commands.Create
                 Description = request.Description
             };
 
-            //{
-            //    Name = request.Name,
-            //    Description = request.Description,
-            //    FoodType = request.FoodType,
-            //    Price = new Money(request.Price)
+            try
+            {
+                var result = await _db.Foods.AddAsync(food);
 
-            //};
-            var result = await _db.Foods.AddAsync(food);
-                //await _db.SaveChangesAsync();
+                return new FoodCreateCommandResult
+                {
+                    FoodId = result.Entity.Id,
+                    Result = OperationResult.BuildSuccess()
+                };
+            }
+            catch (Exception ex)
+            {
 
-                return result.Entity.Id;
+                return new FoodCreateCommandResult
+                {
+                    FoodId = -1,
+                    Result = OperationResult.BuildFailure(ex)
+                };
+            }
+
             
+
 
 
         }

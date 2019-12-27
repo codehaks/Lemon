@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Portal.Domain;
 using Portal.Persisatance;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Portal.Application.FoodApplication.Commands.Create
 {
-    public class CreateFoodUniqueNameValidator: IPipelineBehavior<FoodCreateCommand, int>
+    public class CreateFoodUniqueNameValidator: IPipelineBehavior<FoodCreateCommand, FoodCreateCommandResult>
     {
         private readonly PortalDbContext _db;
 
@@ -19,13 +20,18 @@ namespace Portal.Application.FoodApplication.Commands.Create
 
         }
 
-        public async Task<int> Handle(FoodCreateCommand request, CancellationToken cancellationToken, RequestHandlerDelegate<int> next)
+        public async Task<FoodCreateCommandResult> Handle(FoodCreateCommand request, CancellationToken cancellationToken, RequestHandlerDelegate<FoodCreateCommandResult> next)
         {
             var any = _db.Foods.Any(f => f.Name.Trim() == request.Name.Trim());
 
             if (any)
             {
-                throw new Exception("Food name already exists!");
+                var result = new FoodCreateCommandResult
+                {
+                    Result = OperationResult.BuildFailure(new Exception("Food name already exists!"))
+                };
+                return result;
+                //throw 
             }
 
             var response = await next();

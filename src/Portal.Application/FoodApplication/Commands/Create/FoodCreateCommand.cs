@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Portal.Application.FoodApplication.Commands.Create
 {
-    public class FoodCreateCommand:IRequest<int>
+    public class FoodCreateCommand:IRequest<FoodCreateCommandResult>
     {
         public int Price { get; set; }
         public string Name { get; set; }

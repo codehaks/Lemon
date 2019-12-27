@@ -46,17 +46,25 @@ namespace Portal.Web.Controllers
         [Route("api/food")]
         public async Task<IActionResult> Create(FoodAddInfo model)
         {
-            
-                var result=await _mediator.Send(new FoodCreateCommand
-                {
-                    Name = model.Name,
-                    Price = model.Price,
-                    Description = model.Description,
-                    FoodType = model.FoodType
-                });
 
+            var result = await _mediator.Send(new FoodCreateCommand
+            {
+                Name = model.Name,
+                Price = model.Price,
+                Description = model.Description,
+                FoodType = model.FoodType
+            });
+
+            if (result.Result.Success)
+            {
                 return Ok(result);
-        
+            }
+            else
+            {
+                return BadRequest(result.Result.ErrorMessage);
+            }
+
+
 
         }
 
