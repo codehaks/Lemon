@@ -1,33 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Portal.Domain
+namespace Portal.Application.Common
 {
-    public class OperationResult
+    public class OperationResult<TResult>
     {
+        public TResult Result { get; private set; }
+
         public bool Success { get; private set; }
-        public Exception Exception { get; private set; }
-        public string ErrorMessage { get; private set; }
+        public string? ErrorMessage { get; private set; }
+        public Exception? Exception { get; private set; }
 
-        public static OperationResult BuildSuccess()
+        public static OperationResult<TResult> BuildSuccessResult(TResult result)
         {
-            return new OperationResult { Success = true };
+            return new OperationResult<TResult> { Success = true,Result=result };
+
         }
 
-        public static OperationResult BuildFailure(string errorMessage)
+        public static OperationResult<TResult> BuildFailure(string errorMessage)
         {
-            return new OperationResult { Success = false, ErrorMessage = errorMessage };
+            return new OperationResult<TResult> { Success = false, ErrorMessage = errorMessage };
+
+        }
+        public static OperationResult<TResult> BuildFailure(Exception ex)
+        {
+            return new OperationResult<TResult> { Success = false, Exception = ex };
         }
 
-        internal static OperationResult BuildFailure(Exception exception)
+        public static OperationResult<TResult> BuildFailure(Exception ex, string errorMessage)
         {
-            return new OperationResult
-            {
-                Success = false,
-                Exception = exception,
-                ErrorMessage = exception.Message
-            };
+            return new OperationResult<TResult> { Success = false, Exception = ex, ErrorMessage = errorMessage };
         }
+
     }
-
-
 }

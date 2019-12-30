@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Portal.Application.Common;
 using Portal.Domain;
 using Portal.Persisatance;
 using System;
@@ -20,7 +21,7 @@ namespace Portal.Application.FoodApplication.Commands.Create
 
         }
 
-        public async Task<FoodCreateCommandResult> Handle(FoodCreateCommand request, CancellationToken cancellationToken, RequestHandlerDelegate<FoodCreateCommandResult> next)
+        public async Task<FoodCreateCommandResult> Handle(FoodCreateCommand request, CancellationToken cancellationToken, RequestHandlerDelegate<OperationResult<FoodCreateCommandResult>> next)
         {
             var any = _db.Foods.Any(f => f.Name.Trim() == request.Name.Trim());
 
