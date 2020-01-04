@@ -22,14 +22,14 @@ namespace Portal.Web.Controllers
 
         [HttpPost]
         [Route("api/order")]
-        public IActionResult Create([FromBody] OrderBasketModel orderBasket)
+        public async Task<IActionResult> Create([FromBody] OrderBasketModel orderBasket)
         {
-           var orderId= _mediator.Send(new OrderCreateCommand
+           var result= await _mediator.Send(new OrderCreateCommand
             {
                 UserId = "123",
                 Items = orderBasket.Items.Select(o => new OrderItem { FoodId = o.FoodId, Count = o.Count }).ToList()
             });
-            return Ok(orderId);
+            return Ok(result.Result.OrderId);
         }
     }
 }

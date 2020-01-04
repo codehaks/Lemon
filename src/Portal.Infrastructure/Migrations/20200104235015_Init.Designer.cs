@@ -10,8 +10,8 @@ using Portal.Persisatance;
 namespace Portal.Infrastructure.Migrations
 {
     [DbContext(typeof(PortalDbContext))]
-    [Migration("20200104234632_OrderGuid")]
-    partial class OrderGuid
+    [Migration("20200104235015_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
