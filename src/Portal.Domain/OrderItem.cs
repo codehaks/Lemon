@@ -7,7 +7,7 @@ namespace Portal.Domain
     public class OrderItem
     {
         
-        public int OrderId { get; set; }
+        public Guid OrderId { get; set; }
         public int FoodId { get; set; }
 
         public int Count { get; set; }

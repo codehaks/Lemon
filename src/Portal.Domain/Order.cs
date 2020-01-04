@@ -7,7 +7,7 @@ namespace Portal.Domain
 
     public class Order
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string UserId { get; set; }
         public DateTime TimeCreated { get; set; }
         public OrderState State { get; set; }
