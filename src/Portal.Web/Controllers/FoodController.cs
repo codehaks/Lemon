@@ -55,13 +55,13 @@ namespace Portal.Web.Controllers
                 FoodType = model.FoodType
             });
 
-            if (result.Result.Success)
+            if (result.Success)
             {
-                return Ok(result);
+                return Ok(result.Result);
             }
             else
             {
-                return BadRequest(result.Result.ErrorMessage);
+                return BadRequest(result.ErrorMessage);
             }
 
 

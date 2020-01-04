@@ -52,7 +52,7 @@ namespace Portal.Web
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidateCommandBehavior<,>));
-            services.AddTransient(typeof(IPipelineBehavior<FoodCreateCommand, FoodCreateCommandResult>), typeof(CreateFoodUniqueNameValidator));
+            services.AddTransient(typeof(IPipelineBehavior<FoodCreateCommand, OperationResult<FoodCreateCommandResult>>), typeof(CreateFoodUniqueNameValidator));
             services.AddScoped(typeof(IRequestPostProcessor<,>), typeof(CommitCommandPostProcessor<,>));
 
             //services.AddTransient(typeof(IPipelineBehavior<FoodCreateCommand, int>), typeof(CreateFoodValidationBehavior<FoodCreateCommand, int>));

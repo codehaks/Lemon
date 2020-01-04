@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Portal.Application.FoodApplication.Commands.Create
 {
-    public class CreateFoodUniqueNameValidator: IPipelineBehavior<FoodCreateCommand, FoodCreateCommandResult>
+    public class CreateFoodUniqueNameValidator: IPipelineBehavior<FoodCreateCommand,OperationResult<FoodCreateCommandResult>>
     {
         private readonly PortalDbContext _db;
 
@@ -21,16 +21,14 @@ namespace Portal.Application.FoodApplication.Commands.Create
 
         }
 
-        public async Task<FoodCreateCommandResult> Handle(FoodCreateCommand request, CancellationToken cancellationToken, RequestHandlerDelegate<OperationResult<FoodCreateCommandResult>> next)
+        public async Task<OperationResult<FoodCreateCommandResult>> Handle(FoodCreateCommand request, CancellationToken cancellationToken, RequestHandlerDelegate<OperationResult<FoodCreateCommandResult>> next)
         {
             var any = _db.Foods.Any(f => f.Name.Trim() == request.Name.Trim());
 
             if (any)
             {
-                var result = new FoodCreateCommandResult
-                {
-                    Result = OperationResult.BuildFailure(new Exception("Food name already exists!"))
-                };
+                var result = OperationResult<FoodCreateCommandResult>.BuildFailure(new Exception("Food name already exists!"),"Food name already exists!");
+              
                 return result;
                 //throw 
             }

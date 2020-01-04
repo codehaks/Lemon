@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Portal.Application.Common;
 using Portal.Application.Foods;
 using Portal.Domain;
 using Portal.Domain.Values;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Portal.Application.FoodApplication.Commands.Create
 {
-    class FoodCreateCommandHandler : IRequestHandler<FoodCreateCommand, FoodCreateCommandResult>
+    class FoodCreateCommandHandler : IRequestHandler<FoodCreateCommand, OperationResult<FoodCreateCommandResult>>
     {
         private readonly PortalDbContext _db;
 
@@ -19,7 +20,7 @@ namespace Portal.Application.FoodApplication.Commands.Create
         {
             _db = db;
         }
-        public async Task<FoodCreateCommandResult> Handle(FoodCreateCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult<FoodCreateCommandResult>> Handle(FoodCreateCommand request, CancellationToken cancellationToken)
         {
 
             var food = new Food(request.Name, new Money(request.Price), request.FoodType)
@@ -29,25 +30,25 @@ namespace Portal.Application.FoodApplication.Commands.Create
 
             try
             {
-                var result = await _db.Foods.AddAsync(food);
 
-                return new FoodCreateCommandResult
-                {
-                    FoodId = result.Entity.Id,
-                    Result = OperationResult.BuildSuccess()
-                };
+                var newFood = await _db.Foods.AddAsync(food);
+
+                var result = OperationResult<FoodCreateCommandResult>
+                    .BuildSuccessResult(new FoodCreateCommandResult
+                    {
+                        FoodId = newFood.Entity.Id
+                    });
+                await Task.CompletedTask;
+                return result;
             }
             catch (Exception ex)
             {
 
-                return new FoodCreateCommandResult
-                {
-                    FoodId = -1,
-                    Result = OperationResult.BuildFailure(ex)
-                };
+                var exResult = OperationResult<FoodCreateCommandResult>.BuildFailure(ex);
+                return exResult;
             }
 
-            
+
 
 
 
