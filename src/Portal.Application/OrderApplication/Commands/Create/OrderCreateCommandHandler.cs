@@ -28,11 +28,11 @@ namespace Portal.Application.OrderApplication.Commands
             order.Items = new List<OrderItem>();
             _db.Orders.Add(order);
             var foods = _db.Foods.ToList();
-            //var orderItems = new List<OrderItem>();
+
             foreach (var item in request.Items)
             {
                 var food = foods.Single(f => f.Id == item.FoodId);
-                //orderItems.Add();
+
                 order.Items.Add(new OrderItem
                 {
                     FoodId = item.FoodId,
@@ -42,9 +42,7 @@ namespace Portal.Application.OrderApplication.Commands
                     TotalPrice = food.Price.Value * item.Count
                 });
             }
-            //order.Items.AddRange(orderItems);
-            //await _mediator.Publish(new OrderCreatedNotification());
-
+      
             var result = OperationResult<OrderCreateCommandResult>
                .BuildSuccessResult(new OrderCreateCommandResult
                {
