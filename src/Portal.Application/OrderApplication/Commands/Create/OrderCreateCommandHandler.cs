@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Portal.Application.Common;
+using Portal.Application.OrderApplication.Notifications;
 using Portal.Domain;
 using Portal.Persisatance;
 using System;
@@ -42,6 +43,10 @@ namespace Portal.Application.OrderApplication.Commands
                     TotalPrice = food.Price.Value * item.Count
                 });
             }
+                      
+
+            await _mediator.Publish(new OrderCreatedNotification());         
+
       
             var result = OperationResult<OrderCreateCommandResult>
                .BuildSuccessResult(new OrderCreateCommandResult
