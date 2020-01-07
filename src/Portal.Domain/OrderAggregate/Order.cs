@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using Portal.Domain.OrderAggregate.Specs;
 namespace Portal.Domain
 {
 
@@ -16,7 +16,10 @@ namespace Portal.Domain
 
         public void Cancel()
         {
-            if (State==OrderState.New || IsPremiumUser)
+            var s1 = new CanBeCanceledBeforeCooking();
+            var s2 = new PremiumUserCanCancelBeforeDelivery();
+
+            if (s1.Or(s2).IsSatisfiedBy(this))
             {
                 State = OrderState.Canceled;
             }

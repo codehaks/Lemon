@@ -2,15 +2,17 @@
 using Portal.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
-namespace Portal.Domain.Model.OrderAggregate.Specs
+namespace Portal.Domain.OrderAggregate.Specs
 {
-    class PremiumUserCanCancelBeforeDelivery : ISpecification<Order>
+    class PremiumUserCanCancelBeforeDelivery : Specification<Order>
     {
-        public bool IsSatisfiedBy(Order order)
+      
+        public override Expression<Func<Order, bool>> ToExpression()
         {
-            return order.IsPremiumUser && order.State != Core.Enums.OrderState.Delivered;
+            return order => order.IsPremiumUser;
         }
     }
 }

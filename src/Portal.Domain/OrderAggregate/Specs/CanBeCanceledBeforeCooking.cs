@@ -1,15 +1,16 @@
 ﻿using Portal.Domain.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
-namespace Portal.Domain.Entities.OrderAggregate.Specs
+namespace Portal.Domain.OrderAggregate.Specs
 {
-    class CanBeCanceledBeforeCooking : ISpecification<Order>
+    class CanBeCanceledBeforeCooking : Specification<Order>
     {
-        public bool IsSatisfiedBy(Order Entity)
+        public override Expression<Func<Order, bool>> ToExpression()
         {
-            return Entity.State != Core.Enums.OrderState.New;
+            return order => order.State == OrderState.New;
         }
     }
 }
