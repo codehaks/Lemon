@@ -12,6 +12,16 @@ namespace Portal.Domain
         public DateTime TimeCreated { get; set; }
         public OrderState State { get; set; }
 
+        public bool IsPremiumUser { get; set; }
+
+        public void Cancel()
+        {
+            if (State==OrderState.New || IsPremiumUser)
+            {
+                State = OrderState.Canceled;
+            }
+        }
+
         public ICollection<OrderItem> Items { get; set; }
     }
 }
