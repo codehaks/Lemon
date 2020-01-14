@@ -11,6 +11,7 @@ namespace Portal.Domain
         public string UserId { get; set; }
         public DateTime TimeCreated { get; set; }
         public OrderState State { get; set; }
+        public int Score { get; set; }
 
         public bool IsPremiumUser { get; set; }
 

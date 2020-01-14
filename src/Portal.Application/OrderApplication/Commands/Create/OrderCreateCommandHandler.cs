@@ -16,16 +16,19 @@ namespace Portal.Application.OrderApplication.Commands
     {
         private readonly PortalDbContext _db;
         private readonly IMediator _mediator;
-
-        public OrderCreateCommandHandler(PortalDbContext db, IMediator mediator)
+        private readonly ScoreService _scoreService;
+        public OrderCreateCommandHandler(ScoreService scoreService,PortalDbContext db, IMediator mediator)
         {
             _db = db;
             _mediator = mediator;
+            _scoreService = scoreService;
         }
 
         public async Task<OperationResult<OrderCreateCommandResult>> Handle(OrderCreateCommand request, CancellationToken cancellationToken)
         {
             var order = new Order { State = OrderState.New, TimeCreated = DateTime.Now, UserId = request.UserId };
+
+            order.Score = _scoreService.CalculateScore(order,new Domain.Identity.ApplicationUser());
             order.Items = new List<OrderItem>();
             _db.Orders.Add(order);
             var foods = _db.Foods.ToList();
