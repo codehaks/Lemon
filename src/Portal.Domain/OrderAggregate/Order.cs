@@ -13,6 +13,16 @@ namespace Portal.Domain
         public OrderState State { get; set; }
         public int Score { get; set; }
 
+        public void AddItem(OrderItem item)
+        {
+            Items.Add(item);
+        }
+
+        public void RemoveItem(OrderItem item)
+        {
+            Items.Remove(item);
+        }
+
         public bool IsPremiumUser { get; set; }
 
         public void Cancel()
