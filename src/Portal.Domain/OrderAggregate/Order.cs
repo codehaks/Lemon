@@ -13,6 +13,12 @@ namespace Portal.Domain
         public OrderState State { get; set; }
         public int Score { get; set; }
 
+
+        public Order(Guid id,string userId)
+        {
+
+        }
+
         public void AddItem(OrderItem item)
         {
             Items.Add(item);
