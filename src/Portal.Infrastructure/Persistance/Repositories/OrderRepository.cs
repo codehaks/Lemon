@@ -1,18 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Portal.Core.Base;
-using Portal.Domain;
+﻿using Portal.Domain;
+using Portal.Persisatance;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Portal.Infrastructure.Persistance.Repositories
 {
-    interface IOrderRepository 
+    public class OrderRepository : IOrderRepository
     {
-        //IQueryable<Order> GetQuery();
-        IList<Order> GetUserOrders(string userId);
-        IList<Order> GetUserOrdersForThisWeek(string userId);
-        Order GetLastUserOrder(string userId);
+        private readonly PortalDbContext _db;
+        public OrderRepository(PortalDbContext db)
+        {
+            _db = db;
+        }
+        public Guid Create(Order order)
+        {
+            var result=_db.Orders.Add(order);
+            return result.Entity.Id;
+        }
     }
 }

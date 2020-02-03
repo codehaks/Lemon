@@ -2,6 +2,7 @@
 using Portal.Application.Common;
 using Portal.Application.OrderApplication.Notifications;
 using Portal.Domain;
+using Portal.Infrastructure.Persistance.Repositories;
 using Portal.Persisatance;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,14 @@ namespace Portal.Application.OrderApplication.Commands
     public class OrderCreateCommandHandler :
         IRequestHandler<OrderCreateCommand, OperationResult<OrderCreateCommandResult>>
     {
-        private readonly PortalDbContext _db;
+        //private readonly PortalDbContext _db;
+        private readonly IOrderRepository _orderRepository;
+
         private readonly IMediator _mediator;
         private readonly ScoreService _scoreService;
-        public OrderCreateCommandHandler(ScoreService scoreService,PortalDbContext db, IMediator mediator)
+        public OrderCreateCommandHandler(ScoreService scoreService, IOrderRepository orderRepository, IMediator mediator)
         {
-            _db = db;
+            _orderRepository = orderRepository;
             _mediator = mediator;
             _scoreService = scoreService;
         }
