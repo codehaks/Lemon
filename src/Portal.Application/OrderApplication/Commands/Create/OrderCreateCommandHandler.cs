@@ -15,25 +15,28 @@ namespace Portal.Application.OrderApplication.Commands
     public class OrderCreateCommandHandler :
         IRequestHandler<OrderCreateCommand, OperationResult<OrderCreateCommandResult>>
     {
-        //private readonly PortalDbContext _db;
+        private readonly PortalDbContext _db;
         private readonly IOrderRepository _orderRepository;
 
         private readonly IMediator _mediator;
         private readonly ScoreService _scoreService;
-        public OrderCreateCommandHandler(ScoreService scoreService, IOrderRepository orderRepository, IMediator mediator)
+        public OrderCreateCommandHandler(ScoreService scoreService, 
+            PortalDbContext db, 
+            IOrderRepository orderRepository, 
+            IMediator mediator)
         {
             _orderRepository = orderRepository;
             _mediator = mediator;
             _scoreService = scoreService;
+            _db = db;
         }
 
         public async Task<OperationResult<OrderCreateCommandResult>> Handle(OrderCreateCommand request, CancellationToken cancellationToken)
         {
             var order = new Order { State = OrderState.New, TimeCreated = DateTime.Now, UserId = request.UserId };
 
-            order.Score = _scoreService.CalculateScore(order,new Domain.Identity.ApplicationUser());
             order.Items = new List<OrderItem>();
-            _db.Orders.Add(order);
+
             var foods = _db.Foods.ToList();
 
             foreach (var item in request.Items)
@@ -49,7 +52,9 @@ namespace Portal.Application.OrderApplication.Commands
                     TotalPrice = food.Price.Value * item.Count
                 });
             }
-                      
+
+            order.Score = _scoreService.CalculateScore(order, new Domain.Identity.ApplicationUser());
+            _orderRepository.Create(order);
 
             await _mediator.Publish(new OrderCreatedNotification());         
 

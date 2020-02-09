@@ -19,7 +19,9 @@ using Portal.Application.Common;
 using Portal.Application.FoodApplication;
 using Portal.Application.FoodApplication.Commands.Create;
 using Portal.Application.Foods;
+using Portal.Domain;
 using Portal.Domain.Identity;
+using Portal.Infrastructure.Persistance.Repositories;
 using Portal.Persisatance;
 
 namespace Portal.Web
@@ -58,6 +60,8 @@ namespace Portal.Web
             //services.AddTransient(typeof(IPipelineBehavior<FoodCreateCommand, int>), typeof(CreateFoodValidationBehavior<FoodCreateCommand, int>));
 
             services.AddTransient<IFoodService, FoodService>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<ScoreService>();
 
             services.AddDefaultIdentity<ApplicationUser>()
                .AddDefaultUI()
