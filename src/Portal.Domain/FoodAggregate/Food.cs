@@ -8,7 +8,7 @@ namespace Portal.Domain
 {
     public class Food
     {
-        private Food()
+        public Food()
         {
 
         }

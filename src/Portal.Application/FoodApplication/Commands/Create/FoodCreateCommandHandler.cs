@@ -3,6 +3,7 @@ using Portal.Application.Common;
 using Portal.Application.Foods;
 using Portal.Domain;
 using Portal.Domain.Values;
+using Portal.Infrastructure.Persistance.Repositories;
 using Portal.Persisatance;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,10 @@ namespace Portal.Application.FoodApplication.Commands.Create
 {
     class FoodCreateCommandHandler : IRequestHandler<FoodCreateCommand, OperationResult<FoodCreateCommandResult>>
     {
-        private readonly PortalDbContext _db;
-
-        public FoodCreateCommandHandler(PortalDbContext db)
+        private readonly IUnitOfWork _uow;
+        public FoodCreateCommandHandler(IUnitOfWork uow)
         {
-            _db = db;
+            _uow = uow;
         }
         public async Task<OperationResult<FoodCreateCommandResult>> Handle(FoodCreateCommand request, CancellationToken cancellationToken)
         {
@@ -31,13 +31,13 @@ namespace Portal.Application.FoodApplication.Commands.Create
             try
             {
 
-                var newFood = await _db.Foods.AddAsync(food);
-
+                var newFoodId =await _uow.FoodRepository.Create(food);// await _db.Foods.AddAsync(food);
+                await _uow.CommitAsync();
                 var result = OperationResult<FoodCreateCommandResult>
                     .BuildSuccessResult(new FoodCreateCommandResult
                     {
-                        FoodId = newFood.Entity.Id
-                    });
+                        FoodId = newFoodId
+                    }); 
                 await Task.CompletedTask;
                 return result;
             }

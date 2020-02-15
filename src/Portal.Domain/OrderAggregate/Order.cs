@@ -14,10 +14,6 @@ namespace Portal.Domain
         public int Score { get; set; }
 
 
-        public Order(Guid id,string userId)
-        {
-
-        }
 
         public void AddItem(OrderItem item)
         {
