@@ -1,0 +1,57 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity.UI.V3.Pages.Account.Manage.Internal
+@model Portal.Web.Areas.Admin.Pages.Users.IndexModel
+
+@{
+    ViewData["Title"] = "Users";
+    int i = 1;
+}
+
+<table id="usertable" class="table table-hover table-sm">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Username
+            </th>
+
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.List)
+        {
+
+            <tr style="cursor:pointer">
+                <td>
+                    @i
+                </td>
+                <td>
+                    @if (item.EmailConfirmed)
+                    {
+                        <i class="fa fa-check text-success"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-times text-danger"></i>
+                    }
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+
+
+
+                <td>
+                    <a asp-page="/users/edit" asp-route-userid="@item.Id" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                    <a asp-page="/users/details" asp-route-userid="@item.Id" class="btn btn-secondary"><i class="fa fa-file-text-o"></i></a>
+                    <a asp-page="/users/message" asp-route-userid="@item.Id" asp-route-username="@item.UserName" class="btn btn-outline-info"><i class="fa fa-envelope-o"></i></a>
+                </td>
+            </tr>
+
+            i++;
+        }
+    </tbody>
+</table>
+
