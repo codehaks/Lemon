@@ -9,11 +9,16 @@ namespace Portal.Domain.Values
     {
         public Money(int value)
         {
-            Value = value;
+            if (value >= 0)
+            {
+                Value = value;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("پول نمی تواند کمتر از 0 باشد!");
+            }
         }
-        public int Value { get; set; }
-
-
+        public int Value { get; private set; }
 
     }
 }
