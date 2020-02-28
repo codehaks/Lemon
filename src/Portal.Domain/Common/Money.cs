@@ -18,7 +18,7 @@ namespace Portal.Domain.Values
                 throw new ArgumentOutOfRangeException("پول نمی تواند کمتر از 0 باشد!");
             }
         }
-        public int Value { get; private set; }
+        public int Value { get;}
 
     }
 }
