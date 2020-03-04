@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Portal.Domain.PaymentAggregate
 {
-    class PaymentEventSource
+    public class PaymentEventSource
     {
         public Guid Id { get; private set; }
 
