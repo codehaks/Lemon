@@ -34,7 +34,7 @@ namespace Portal.Web.Controllers
         public IActionResult CheckCredit(string userId)
         {
             var userPaymentEvents = _db.Payments.Where(p => p.User == userId).ToList();
-            var credit=userPaymentEvents.Sum(p=>p.)
+            //var credit=userPaymentEvents.Sum(p=>p.)
             return Ok();
         }
 
