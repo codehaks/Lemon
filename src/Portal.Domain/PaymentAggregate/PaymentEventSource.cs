@@ -6,11 +6,16 @@ namespace Portal.Domain.PaymentAggregate
 {
     public class PaymentEventSource
     {
+        public PaymentEventSource()
+        {
+            Timestamp = DateTime.Now;
+            Id = new Guid();
+        }
         public Guid Id { get; private set; }
 
-        public string Data { get; private set; }
+        public string Data { get;  set; }
 
-        public string User { get; private set; }
+        public string User { get;  set; }
         public DateTime Timestamp { get; private set; }
         public PaymentEventType EventType { get; set; }
     }
