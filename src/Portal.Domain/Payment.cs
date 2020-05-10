@@ -18,6 +18,8 @@ namespace Portal.Domain
 
         public string UserId { get; set; }
 
+        public int CreditSnapshot { get; set; }
+
         public PaymentEventType EventType { get; set; }
     }
     public enum PaymentEventType

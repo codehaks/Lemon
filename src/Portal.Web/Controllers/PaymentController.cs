@@ -47,7 +47,7 @@ namespace Portal.Web.Controllers
 
             var credit = payments.Where(p => p.EventType == Domain.PaymentEventType.AddCredit).Sum(p => p.Amount)
                      - payments.Where(p => p.EventType == Domain.PaymentEventType.RemoveCredit).Sum(p => p.Amount);
-
+            
             return Ok(credit);
         }
     }
