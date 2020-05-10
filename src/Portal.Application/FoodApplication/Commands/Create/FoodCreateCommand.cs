@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Portal.Application.FoodApplication.Commands.Create
 {
-    public class FoodCreateCommand:IRequest<OperationResult<FoodCreateCommandResult>>
+    public class FoodCreateCommand:IRequest<OperationResult<FoodCreateCommandResult>>, ICommittableRequest
     {
         public int Price { get; set; }
         public string Name { get; set; }

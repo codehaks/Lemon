@@ -21,7 +21,12 @@ namespace Portal.Application.Common
 
         public async Task Process(TRequest request, TResponse response, CancellationToken cancellationToken)
         {
-            await _db.SaveChangesAsync();
+            if (request is ICommittableRequest)
+            {
+                await _db.SaveChangesAsync();
+            }
+            //return await next();
+            
         }
     }
 }
