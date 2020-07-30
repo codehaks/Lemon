@@ -9,6 +9,7 @@ namespace Portal.Domain
         public Guid Id { get; set; }
 
         public int Amount { get; set; }
+        public int Value { get; set; }
 
         public string BankTransactionId { get; set; }
 
