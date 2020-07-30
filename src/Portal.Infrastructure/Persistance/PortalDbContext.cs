@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Portal.Domain;
 using Portal.Domain.Identity;
+using Portal.Infrastructure.Persistance.Configs;
 using Portal.Persistance.Configs;
 
 namespace Portal.Persisatance
@@ -16,9 +17,14 @@ namespace Portal.Persisatance
         public DbSet<Food> Foods { get; set; }
         //public DbSet<Order> Orders { get; set; }
 
+        public DbSet<Payment> Payments { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new FoodConfig());
+            builder.ApplyConfiguration(new OrderConfig());
+            builder.ApplyConfiguration(new OrderItemConfig());
 
             base.OnModelCreating(builder);
         }

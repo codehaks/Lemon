@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +15,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Portal.Application.Common;
 using Portal.Application.FoodApplication;
+using Portal.Application.FoodApplication.Commands.Create;
 using Portal.Application.Foods;
 using Portal.Domain.Identity;
 using Portal.Persisatance;
@@ -44,12 +48,21 @@ namespace Portal.Web
             });
 
             services.AddAutoMapper(typeof(FoodMapper).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(FoodCreateCommand).GetTypeInfo().Assembly);
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidateCommandBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<FoodCreateCommand, OperationResult<FoodCreateCommandResult>>), typeof(CreateFoodUniqueNameValidator));
+            services.AddScoped(typeof(IRequestPostProcessor<,>), typeof(CommitCommandPostProcessor<,>));
+
+            //services.AddTransient(typeof(IPipelineBehavior<FoodCreateCommand, int>), typeof(CreateFoodValidationBehavior<FoodCreateCommand, int>));
 
             services.AddTransient<IFoodService, FoodService>();
 
             services.AddDefaultIdentity<ApplicationUser>()
                .AddDefaultUI()
                .AddEntityFrameworkStores<PortalDbContext>();
+            services.AddControllers();
 
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation()
@@ -67,6 +80,7 @@ namespace Portal.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }
